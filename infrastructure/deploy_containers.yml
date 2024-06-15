@@ -1,0 +1,31 @@
+# infrastructure/deploy_containers.yml
+
+---
+- name: Deploy containers
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure Docker is running
+      service:
+        name: docker
+        state: started
+
+    - name: Pull Docker image
+      docker_image:
+        name: your_docker_registry/your_image:latest
+        source: pull
+
+    - name: Remove existing container if running
+      docker_container:
+        name: your_container_name
+        state: absent
+
+    - name: Run the Docker container
+      docker_container:
+        name: your_container_name
+        image: your_docker_registry/your_image:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
+

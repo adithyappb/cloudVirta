@@ -1,0 +1,5 @@
+# requirements.txt
+
+Flask==2.0.2
+openstacksdk==0.54.0
+
